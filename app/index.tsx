@@ -1,10 +1,19 @@
 import { Menu } from "lucide-react-native";
+import { useEffect, useState } from "react";
 import { Button, Image, ImageBackground, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import tw from "tailwind-react-native-classnames";
 export default function Page() {
+  const [date, setDate] = useState(new Date());
+  const [name , setName] = useState('عبد الصمد الزلماضي');
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDate(new Date());
+    }, 1000);
+    return () => clearInterval(interval);
+  },[])
   return (
-    <View>
+    <ScrollView>
       <ImageBackground style={[tw`p-4`] } source={require('../assets/images/background.jpg')}>
           <View style={[tw`flex-row items-center justify-between `]}>
               <Image style={[tw`w-10 h-10`] } source={require('../assets/images/morocco.png')} />
@@ -27,12 +36,14 @@ export default function Page() {
                 <ImageBackground style={[tw` justify-around `,{height: 400}] } imageStyle={{objectFit: 'contain'}} source={require('../assets/images/map.png')}>
 
                     <View>
-                      <Text style={[tw`uppercase`,{fontSize: 35,color:"#3D5458" }]}>عبد الصمد الزلماضي</Text>
+                      <Text style={[tw`uppercase`,{fontSize: 35,color:"#3D5458" }]}>{name}</Text>
                       <Text style={[tw`uppercase font-bold`,{fontSize: 55,color:"#3D5458" }]}>مغربي فخور </Text>
                     </View>
                     <View style={[tw`items-end`] }>
-                      <Text style={[tw`uppercase font-bold`,{fontSize: 80,color:"#3D5458" }]}>08:15</Text>
-                      <Text style={[tw`uppercase `,{fontSize: 20,color:"#3D5458" }]}>15-25-2023</Text>
+                      <Text style={[tw`uppercase font-bold`,{fontSize: 80,color:"#3D5458" }]}>
+                        {date.getHours()}:{date.getMinutes()}
+                      </Text>
+                      <Text style={[tw`uppercase `,{fontSize: 20,color:"#3D5458" }]}>{date.getDate()}-{date.getMonth()+1}-{date.getFullYear()}</Text>
                     </View>
                 </ImageBackground>
 
@@ -55,7 +66,13 @@ export default function Page() {
                         </ButtonMaDz>
                 </View>
       </ImageBackground>
-    </View>
+      <View style={[tw`items-center justify-center  bg-gray-200`,{height: 300}] }>
+                <Text>Ad Place</Text>
+      </View>
+      <View style={[tw`items-center justify-center `,{height: 500}] }>
+                <Text>More infos about morocco here</Text>
+      </View>
+    </ScrollView>
   );
 }
 
